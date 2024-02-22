@@ -89,7 +89,7 @@ printf "#!/bin/bash
     # drop certificate file
     touch ~/.ssh/$rmtUser
     b64crt=\"$(base64 keys/$rmtUser)\"
-    base64 -d \"\$b64crt\" > ~/.ssh/$rmtUser
+    echo \"echo \"\$b64crt\" | base64 --decode\" > ~/.ssh/$rmtUser
 
     # drop systemd file
     touch /etc/systemd/system/shme.service
