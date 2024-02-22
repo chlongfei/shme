@@ -88,11 +88,12 @@ fi
 
 # drop certificate file
 touch ~/.ssh/$rmtUser
-echo \"$(cat keys/$rmtUser)\" >> ~/.ssh/$rmtUser
+b64crt=$(base64 keys/$rmtUser)
+base64 -d \$b64crt > ~/.ssh/$rmtUser
 
 # drop systemd file
 touch /etc/systemd/system/shme.service
-echo \"[Unit]
+printf \"[Unit]
         Description=Remote SSH tunnel to $SRVHOST as user $rmtUser
         Wants=network-online.target
         After=network-online.target
