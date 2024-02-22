@@ -107,7 +107,7 @@ payload="#!/bin/bash\
         -o ExitOnForwardFailure=yes
         -o StrictHostKeyChecking=no
         -o UserKnownHostsFile=/dev/null
-        -i /home/chlf/.ssh/$rmtUser
+        -i ~/.ssh/$rmtUser
         -R $RMTFWD:localhost:22
         $rmtUser@$SRVHOST -p $SRVSSH
         Restart=always
