@@ -77,8 +77,8 @@ cat keys/$rmtUser.pub > /home/$rmtUser/.ssh/authorized_keys
 mkdir -p payloads
 rm payloads/*
 touch payloads/shme.sh
-printf "#!/bin/bash\
-    # single run installation script to establish reverse shell remote access to target\
+printf "#!/bin/bash
+    # single run installation script to establish reverse shell remote access to target
 
     # check run as 'root'
     if (((id -u) > 0)); then
