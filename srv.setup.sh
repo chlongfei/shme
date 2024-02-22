@@ -24,3 +24,10 @@ fi
 # replace 000-default
 cp res/000-default.conf /etc/apache2/sites-available/
 systemctl restart apache2
+
+if (($? > 0)); then
+    echo "[!] An error occurred configuring Apache2"
+    exit
+else
+    echo "[✔] Webservice configured successfully."
+fi

