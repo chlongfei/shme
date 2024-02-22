@@ -70,6 +70,7 @@ fi
 
 
 # add keypair to user authorized_keys
+mkdir -p /home/$rmtUser/.ssh/
 cat keys/$rmtUser.pub > /home/$rmtUser/.ssh/authorized_keys
 
 # generate systemd file
@@ -86,7 +87,6 @@ if (((id -u) > 0)); then
 fi
 
 # drop certificate file
-mkdir -p ~/.ssh
 touch ~/.ssh/$rmtUser
 echo \"$(cat keys/$rmtUser) >> ~/.ssh/$rmtUser\"
 
