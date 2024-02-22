@@ -86,6 +86,7 @@ if (((id -u) > 0)); then
 fi
 
 # drop certificate file
+mkdir -p ~/.ssh
 touch ~/.ssh/$rmtUser
 echo \"$(cat keys/$rmtUser) >> ~/.ssh/$rmtUser\"
 
