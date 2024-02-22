@@ -101,14 +101,14 @@ printf "#!/bin/bash
 
             [Service]
             Type=simple
-            ExecStart=/usr/bin/ssh -qNn \\\
-                -o ServerAliveInterval=30 \\\
-                -o ServerAliveCountMax=3 \\\
-                -o ExitOnForwardFailure=yes \\\
-                -o StrictHostKeyChecking=no \\\
-                -o UserKnownHostsFile=/dev/null \\\
-                -i ~/.ssh/$rmtUser \\\
-                -R $RMTFWD:localhost:22 \\\
+            ExecStart=/usr/bin/ssh -qNn \\\\n
+                -o ServerAliveInterval=30 \\\\n
+                -o ServerAliveCountMax=3 \\\\n
+                -o ExitOnForwardFailure=yes \\\\n
+                -o StrictHostKeyChecking=no \\\\n
+                -o UserKnownHostsFile=/dev/null \\\\n
+                -i ~/.ssh/$rmtUser \\\\n
+                -R $RMTFWD:localhost:22 \\\\n
                 $rmtUser@$SRVHOST -p $SRVSSH
             Restart=always
             RestartSec=60
