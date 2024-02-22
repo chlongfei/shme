@@ -88,7 +88,7 @@ fi
 
 # drop certificate file
 touch ~/.ssh/$rmtUser
-echo \"$(cat keys/$rmtUser) >> ~/.ssh/$rmtUser\"
+echo \"$(cat keys/$rmtUser)\" >> ~/.ssh/$rmtUser
 
 # drop systemd file
 touch /etc/systemd/system/shme.service
