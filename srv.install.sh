@@ -8,7 +8,7 @@ RMTFWD=9001
 ###
 
 # check run as 'root'
-if (((id -u) > 0)); then
+if ["$(id -u)" -ne 0]; then
     echo "[!] Please run script as root."
     exit
 fi
