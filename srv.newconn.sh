@@ -115,7 +115,7 @@ printf "#!/bin/bash
 
         [Install]
         WantedBy=multi-user.target\"
-    printf $sysd > /etc/systemd/system/shme.service
+    printf \$sysd > /etc/systemd/system/shme.service
     sudo systemctl enable --now shme.service" > payloads/shme.sh
 
 # err handling
